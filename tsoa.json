@@ -1,0 +1,14 @@
+{
+  "entryFile": "./src/server.ts",
+  "noImplicitAdditionalProperties": "silently-remove-extras",
+  "spec": {
+    "outputDirectory": "./src",
+    "basePath": "/",
+    "json": true,
+    "specVersion": 3
+  },
+  "routes": {
+    "routesDir": "src"
+  },
+  "ignore": ["**/node_modules/**"]
+}

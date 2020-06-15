@@ -1,0 +1,42 @@
+version: "3.3"
+
+services:
+  database:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "test"
+      PGDATA: /data/postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/data/postgres
+    networks:
+      - main
+    restart: unless-stopped
+  notebook:
+    build:
+      context: ./notebook-jupyter
+    environment:
+      JUPYTER_TOKEN: 3be77e375583123daaa12dd1f617d13d1e5520dcb57a3875
+    volumes:
+      - ./notebook-jupyter/work:/home/jovyan/work
+    ports:
+      - "8888:8888"
+    networks:
+      - main
+  rebench-api:
+    build:
+      context: .
+    environment:
+      POSTGRES_HOST: database
+    ports:
+      - 3000:3000
+    networks:
+      - main
+
+networks:
+  main:
+
+volumes:
+  postgres-data:
