@@ -1,0 +1,5 @@
+*.dump
+*.sql
+Dockerfile
+docker-compose.yml
+docker-compose.prod.yml
