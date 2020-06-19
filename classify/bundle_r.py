@@ -14,5 +14,5 @@ def get_changepoints(values):
         rvalues,
         method='PELT',
         penalty='Manual',
-        pen_value=float(15.0*np.log(values.shape[0])))
+        pen_value=float(15.0 * np.log(values.shape[0])))
     return np.asarray(r.slots['cpts'])

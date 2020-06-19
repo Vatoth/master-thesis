@@ -102,8 +102,6 @@ for benchmark in benchmarks:
             min_size = int(percentage(1, len(measurements_values)))
             if min_size == 1:
                 min_size += 1
-            print("min_size={0}".format(min_size))
-            print(len(measurements_values))
             breakpoints = rpt.Pelt(
                 model="l2").fit_predict(
                 measurements_values,
@@ -129,7 +127,6 @@ for benchmark in benchmarks:
             means = []
             measurements_values_matrix = np.split(
                 measurements_values, breakpoints)
-            print(len(measurements_values_matrix))
             for measurements_values_split in measurements_values_matrix:
                 if measurements_values_split.size > 0:
                     mean = np.mean(measurements_values_split)
