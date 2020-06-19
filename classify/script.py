@@ -109,7 +109,7 @@ def analysis(filename, values):
 
     ax.plot(
         outliers,
-        measurements_values[outliers],
+        values[outliers],
         'ro',
         markersize=7,
         label='outliers')
