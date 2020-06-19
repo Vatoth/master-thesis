@@ -99,16 +99,23 @@ def get_breakpoints_value(values, changepoints):
     return x_list, y_list, segments
 
 
-fig = plt.figure(figsize=(40,10))
+fig = plt.figure(figsize=(40, 10))
 
 
 def analysis(filename, values):
     values = pd.Series(values)
     outliers = test(values)
     ax = fig.add_subplot()
+
+    ax.plot(
+        outliers,
+        measurements_values[outliers],
+        'ro',
+        markersize=7,
+        label='outliers')
+    ax.plot(values, 'b-', label='measurements')
     values = values.drop(index=outliers)
     values = values.to_numpy()
-    ax.plot(values, 'b-', label='measurements')
     breakpoints = get_changepoints(values)
     breakpoints = np.insert(breakpoints, 0, 0)
     x, y, segments = get_breakpoints_value(values, breakpoints)
@@ -125,6 +132,7 @@ def analysis(filename, values):
         '{0}_{1}.png'.format(filename, label), dpi=300)
 
     plt.clf()
+
 
 benchmarks = session.get("/benchmarks").json()
 
