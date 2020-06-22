@@ -27,10 +27,9 @@ class RelativeSession(requests.Session):
 session = RelativeSession("http://localhost:3000")
 
 
-def rolling_window(a, window):
-    shape = a.shape[:-1] + (a.shape[-1] - window + 1, window)
-    strides = a.strides + (a.strides[-1],)
-    return np.lib.stride_tricks.as_strided(a, shape=shape, strides=strides)
+
+def percentage(percent, whole):
+    return int((percent * whole) / 100.0)
 
 
 def is_outlier(value, p25, p75):
@@ -54,16 +53,16 @@ def get_indices_of_outliers(values):
     return indices_of_outliers
 
 
-def test(values):
+def get_outliers(values, warmup_index):
     windows = []
-    values.rolling(200).apply(
+    values.rolling(warmup_index).apply(
         lambda x: windows.append(
             x.values) or 0, raw=False)
-    windows = windows[200:]
+    windows = windows[warmup_index:]
     outliers = np.array([])
     for i, window in enumerate(windows):
         indices_of_outliers = np.array(get_indices_of_outliers(window))
-        indices_of_outliers = indices_of_outliers + (200 + (i))
+        indices_of_outliers = indices_of_outliers + (warmup_index + (i))
         outliers = np.unique(
             np.concatenate(
                 (outliers, indices_of_outliers), 0))
@@ -104,7 +103,7 @@ fig = plt.figure(figsize=(40, 10))
 
 def analysis(filename, values):
     values = pd.Series(values)
-    outliers = test(values)
+    outliers = get_outliers(values, 200)
     ax = fig.add_subplot()
 
     ax.plot(
@@ -138,14 +137,18 @@ benchmarks = session.get("/benchmarks").json()
 
 fig = plt.figure(figsize=(10, 6))
 for benchmark in benchmarks:
-    path = Path('benchmarks/{0}'.format(benchmark['name']))
-    path.mkdir(parents=True, exist_ok=True)
     runs = session.get("/benchmarks/{0}/runs".format(benchmark['id'])).json()
     for i, run in enumerate(runs):
         executor = session.get("/executors/{0}".format(run['execid'])).json()
+        path = Path('benchmarks/{0}/{1}'.format(benchmark['name'], executor['name']))
+        path.mkdir(parents=True, exist_ok=True)
         measurements = session.get(
             "/runs/{0}/measurements".format(run['id'])).json()
         measurements_values = np.array(
             list(map(lambda x: x['value'], measurements)))
-        filename = 'benchmarks/{0}/plot_{1}'.format(benchmark['name'], i)
-        analysis(filename, measurements_values)
+        if len(measurements_values) > 200:
+            filename = 'benchmarks/{0}/{1}/plot_{2}'.format(benchmark['name'], executor['name'], i)
+            try:
+                analysis(filename, measurements_values)
+            except Exception as E:
+                pass
