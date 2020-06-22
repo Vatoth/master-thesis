@@ -3,10 +3,14 @@ import numpy as np
 
 # From Virtual Machine Warmup Blows Hot and Cold
 
-DELTA = 0.001  # Absolute time delta (in seconds) below which segments are
+DELTA = 1  # Absolute time delta (in seconds) below which segments are
 # considered equivalent.
 STEADY_STATE_LEN = 500  # How many in-process iterations from the end of the time-series
 # data will a non-equivalent segment trigger "no steady state"?
+
+
+def percentage(percent, whole):
+    return int((percent * whole) / 100.0)
 
 
 def classify(segs, n_values):
