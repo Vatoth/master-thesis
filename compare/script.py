@@ -1,3 +1,5 @@
+from dtw import accelerated_dtw
+from scipy.signal import savgol_filter
 from math import log
 import math
 import json
@@ -27,11 +29,9 @@ session = RelativeSession("http://localhost:3000")
 sources = session.get(
     "/sources/?repourl=https://github.com/smarr/SOMns").json()
 
-first_source = sources[1]
-second_source = sources[4]
-sources = [first_source, second_source]
 
 fig = plt.figure(figsize=(10, 6))
+
 
 def is_outlier(value, p25, p75):
     """Check if value is an outlier
@@ -69,10 +69,13 @@ def get_outliers(values, warmup_index):
                 (outliers, indices_of_outliers), 0))
     return outliers
 
+
 values_list = []
+
+#sources = [sources[29], sources[34]]
+#sources = [sources[42], sources[43]]
 for i, source in enumerate(sources):
     trials = session.get("/sources/{0}/trials".format(source['id'])).json()
-    trial = trials[0]
     for trial in trials:
         measurements = session.get(
             "/trials/{0}/measurements".format(trial['id'])).json()
@@ -89,26 +92,98 @@ for i, source in enumerate(sources):
         path = Path(
             'benchmarks/')
         path.mkdir(parents=True, exist_ok=True)
-        filename = "benchmarks/plot_{0}_{1}_{2}.png".format(benchmark['name'], executor['name'], i)
+        filename = "benchmarks/plot_{0}_{1}_{2}.png".format(
+            benchmark['name'], executor['name'], i)
         ax = fig.add_subplot()
         ax.plot(values, 'b-', label='measurements')
-        print(filename)
         fig.savefig(filename, dpi=300)
         values_list.append(values)
         plt.clf()
         break
 
-exp_data = values_list[0]
-num_data = values_list[1]
 
-if len(exp_data) < len(num_data):
-    num_data = num_data[:len(exp_data)]
+def smooth(y, box_pts):
+    box = np.ones(box_pts) / box_pts
+    y_smooth = np.convolve(y, box, mode='same')
+    return y_smooth
 
 
-if len(num_data) < len(exp_data):
-    exp_data = exp_data[:len(num_data)]
+def manhattan_distance(x, y):
+    return np.abs(x - y)
 
-print(len(exp_data), len(num_data))
-dtw, d = similaritymeasures.dtw(exp_data, num_data)
+for i, values in enumerate(values_list):
+    x = values
+    if i + 1 < len(values_list):
+        y = values_list[i + 1]
+    else:
+        break
+    print(len(values_list))
+    print(len(x), len(y))
+    exp_data = x
+    num_data = y
+    #exp_data = savgol_filter(x, 51, 3)
+    #num_data = savgol_filter(y, 51, 3)
 
-print(dtw)
+    if len(exp_data) < len(num_data):
+        num_data = num_data[:len(exp_data)]
+
+    if len(num_data) < len(exp_data):
+        exp_data = exp_data[:len(num_data)]
+
+
+    exp_data = exp_data.reshape(-1, 1)
+    num_data = num_data.reshape(-1, 1)
+
+    """ x = np.arange(len(exp_data))
+    y = exp_data
+    exp_data = np.zeros((len(x), 2))
+    exp_data[:, 0] = x
+    exp_data[:, 1] = y
+
+    x = np.arange(len(num_data))
+    y = num_data
+    num_data = np.zeros((len(x), 2))
+    num_data[:, 0] = x
+    num_data[:, 1] = y """
+
+
+    path = Path(
+            'compare_plot/')
+    path.mkdir(parents=True, exist_ok=True)
+    filename = "compare_plot/plot_{0}.png".format(i)
+    ax = fig.add_subplot()
+    ax.plot(exp_data, label='1st measurements')
+    ax.plot(num_data, label='2nd measurements')
+
+    fig.savefig(filename, dpi=300)
+    plt.clf()
+
+    # quantify the difference between the two curves using PCM
+    #pcm = similaritymeasures.pcm(exp_data, num_data)
+
+    # quantify the difference between the two curves using
+    # Discrete Frechet distance
+    #df = similaritymeasures.frechet_dist(exp_data, num_data)
+
+    # quantify the difference between the two curves using
+    # area between two curves
+    #area = similaritymeasures.area_between_two_curves(exp_data, num_data)
+
+    # quantify the difference between the two curves using
+    # Curve Length based similarity measure
+    #cl = similaritymeasures.curve_length_measure(exp_data, num_data)
+
+    # quantify the difference between the two curves using
+    # Dynamic Time Warping distance
+    dtw, d = similaritymeasures.dtw(exp_data, num_data)
+
+    # print the results
+    #print(pcm, df, area, cl, dtw)
+
+
+
+
+    d, cost_matrix, acc_cost_matrix, path = accelerated_dtw(
+        exp_data, num_data, dist=manhattan_distance)
+    print(d / len(exp_data))
+

@@ -27,6 +27,18 @@ six = "*"
 
 [[package]]
 category = "main"
+description = "Python DTW Module"
+name = "dtw"
+optional = false
+python-versions = "*"
+version = "1.4.0"
+
+[package.dependencies]
+numpy = "*"
+scipy = "*"
+
+[[package]]
+category = "main"
 description = "Internationalized Domain Names in Applications (IDNA)"
 name = "idna"
 optional = false
@@ -171,7 +183,7 @@ secure = ["certifi", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "pyOpenSSL (>=0
 socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7,<2.0)"]
 
 [metadata]
-content-hash = "6c7a396117dff7b14a1b4625b7edf91353946ae70ff4abd0a1b3b9ec06b18ff7"
+content-hash = "c368fa91df4b42ebc611a7ee058d091d1735f8621c9838aecfe34fa847bd12ca"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -186,6 +198,9 @@ chardet = [
 cycler = [
     {file = "cycler-0.10.0-py2.py3-none-any.whl", hash = "sha256:1d8a5ae1ff6c5cf9b93e8811e581232ad8920aeec647c37316ceac982b08cb2d"},
     {file = "cycler-0.10.0.tar.gz", hash = "sha256:cd7b2d1018258d7247a71425e9f26463dfb444d411c39569972f4ce586b0c9d8"},
+]
+dtw = [
+    {file = "dtw-1.4.0.tar.gz", hash = "sha256:6be2d561cbebede2550d877b32ea4b5c058dced6a846603d7881d214c29f88bc"},
 ]
 idna = [
     {file = "idna-2.10-py2.py3-none-any.whl", hash = "sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"},
