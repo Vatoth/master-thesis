@@ -27,6 +27,6 @@ export class Benchmark extends Model<Benchmark> {
   @Column(DataType.STRING)
   description?: string;
 
-  @HasMany(() => Run, 'benchmarkid')
+  @HasMany(() => Run, "benchmarkid")
   runs: Run[];
 }

@@ -37,26 +37,28 @@ class App {
     this.app.use("/", swaggerUI.serve);
     this.app.get("/", swaggerUI.setup(swaggerJSON));
 
-    this.app.use((
-      err: unknown,
-      req: express.Request,
-      res: express.Response,
-      next: express.NextFunction
-    ): express.Response | void => {
-      if (err instanceof ValidateError) {
-        console.warn(`Caught Validation Error for ${req.path}:`, err.fields);
-        return res.status(422).json({
-          message: "Validation Failed",
-          details: err?.fields,
-        });
+    this.app.use(
+      (
+        err: unknown,
+        req: express.Request,
+        res: express.Response,
+        next: express.NextFunction
+      ): express.Response | void => {
+        if (err instanceof ValidateError) {
+          console.warn(`Caught Validation Error for ${req.path}:`, err.fields);
+          return res.status(422).json({
+            message: "Validation Failed",
+            details: err?.fields,
+          });
+        }
+        if (err instanceof Error) {
+          return res.status(500).json({
+            message: "Internal Server Error",
+          });
+        }
+        next();
       }
-      if (err instanceof Error) {
-        return res.status(500).json({
-          message: "Internal Server Error",
-        });
-      }
-      next();
-    });
+    );
 
     RegisterRoutes(this.app);
   }

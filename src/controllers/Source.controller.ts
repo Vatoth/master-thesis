@@ -33,15 +33,25 @@ export class SourceController extends Controller {
   @SuccessResponse("200", "OK")
   @Get()
   public async getSources(
-    @Query() commitid: string = undefined
+    @Query() commitid: string = undefined,
+    @Query() repourl: string = undefined
   ): Promise<ISource[]> {
-    if (commitid === undefined) {
+    if (!commitid || !repourl) {
       return await Source.findAll();
     }
-    return await Source.findAll({
-      where: {
-        commitid: commitid,
-      },
-    });
+    if (commitid) {
+      return await Source.findAll({
+        where: {
+          commitid: commitid,
+        },
+      });
+    }
+    if (repourl) {
+      return await Source.findAll({
+        where: {
+          repourl: repourl,
+        },
+      });
+    }
   }
 }

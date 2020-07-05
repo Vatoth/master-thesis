@@ -23,13 +23,12 @@ export class Criterion extends Model<Criterion> {
   id: number;
 
   @AllowNull(true)
-  @Unique({name: 'criterion_name_unit_key', msg: null})
+  @Unique({ name: "criterion_name_unit_key", msg: null })
   @Column(DataType.STRING)
   name?: string;
-  
-  
+
   @AllowNull(true)
-  @Unique({name: 'criterion_name_unit_key', msg: null})
+  @Unique({ name: "criterion_name_unit_key", msg: null })
   @ForeignKey(() => Unit)
   @Column(DataType.STRING)
   unit?: string;

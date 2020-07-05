@@ -27,7 +27,6 @@ class RelativeSession(requests.Session):
 session = RelativeSession("http://localhost:3000")
 
 
-
 def percentage(percent, whole):
     return int((percent * whole) / 100.0)
 
@@ -140,14 +139,17 @@ for benchmark in benchmarks:
     runs = session.get("/benchmarks/{0}/runs".format(benchmark['id'])).json()
     for i, run in enumerate(runs):
         executor = session.get("/executors/{0}".format(run['execid'])).json()
-        path = Path('benchmarks/{0}/{1}'.format(benchmark['name'], executor['name']))
+        path = Path(
+            'benchmarks/{0}/{1}'.format(benchmark['name'],
+                                        executor['name']))
         path.mkdir(parents=True, exist_ok=True)
         measurements = session.get(
             "/runs/{0}/measurements".format(run['id'])).json()
         measurements_values = np.array(
             list(map(lambda x: x['value'], measurements)))
         if len(measurements_values) > 200:
-            filename = 'benchmarks/{0}/{1}/plot_{2}'.format(benchmark['name'], executor['name'], i)
+            filename = 'benchmarks/{0}/{1}/plot_{2}'.format(
+                benchmark['name'], executor['name'], i)
             try:
                 analysis(filename, measurements_values)
             except Exception as E:
