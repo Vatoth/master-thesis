@@ -21,20 +21,17 @@ export class BenchmarkController extends Controller {
     return await Benchmark.findByPk(id);
   }
 
-
   @Get("{id}/executors")
   public async getBenchmarkExecutors(id: number): Promise<IExecutor[]> {
     const benchmark = await Benchmark.findByPk(id);
     return benchmark.getExecutors();
   }
 
-
   @Get("{id}/runs")
   public async getBenchmarkRuns(id: number): Promise<IRun[]> {
     const benchmark = await Benchmark.findByPk(id);
     return benchmark.getRuns();
   }
-
 
   @SuccessResponse("200", "OK")
   @Get()
