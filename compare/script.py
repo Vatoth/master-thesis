@@ -111,6 +111,41 @@ def smooth(y, box_pts):
 def manhattan_distance(x, y):
     return np.abs(x - y)
 
+def prepare_data(exp_data, num_data):
+    x = np.arange(len(exp_data))
+    y = exp_data
+    exp_data = np.zeros((len(x), 2))
+    exp_data[:, 0] = x
+    exp_data[:, 1] = y
+
+    x = np.arange(len(num_data))
+    y = num_data
+    num_data = np.zeros((len(x), 2))
+    num_data[:, 0] = x
+    num_data[:, 1] = y
+
+
+    # quantify the difference between the two curves using PCM
+    pcm = similaritymeasures.pcm(exp_data, num_data)
+
+    # quantify the difference between the two curves using
+    # Discrete Frechet distance
+    df = similaritymeasures.frechet_dist(exp_data, num_data)
+
+    # quantify the difference between the two curves using
+    # area between two curves
+    area = similaritymeasures.area_between_two_curves(exp_data, num_data)
+
+    # quantify the difference between the two curves using
+    # Curve Length based similarity measure
+    cl = similaritymeasures.curve_length_measure(exp_data, num_data)
+
+    # quantify the difference between the two curves using
+    # Dynamic Time Warping distance
+    dtw, d = similaritymeasures.dtw(exp_data, num_data)
+
+    return pcm, df, area, cl, dtw, d
+
 for i, values in enumerate(values_list):
     x = values
     if i + 1 < len(values_list):
@@ -130,6 +165,7 @@ for i, values in enumerate(values_list):
     if len(num_data) < len(exp_data):
         exp_data = exp_data[:len(num_data)]
 
+    pcm, df, area, cl, dtw, d = prepare_data(exp_data, num_data)
 
     exp_data = exp_data.reshape(-1, 1)
     num_data = num_data.reshape(-1, 1)
@@ -158,30 +194,14 @@ for i, values in enumerate(values_list):
     fig.savefig(filename, dpi=300)
     plt.clf()
 
-    # quantify the difference between the two curves using PCM
-    #pcm = similaritymeasures.pcm(exp_data, num_data)
-
-    # quantify the difference between the two curves using
-    # Discrete Frechet distance
-    #df = similaritymeasures.frechet_dist(exp_data, num_data)
-
-    # quantify the difference between the two curves using
-    # area between two curves
-    #area = similaritymeasures.area_between_two_curves(exp_data, num_data)
-
-    # quantify the difference between the two curves using
-    # Curve Length based similarity measure
-    #cl = similaritymeasures.curve_length_measure(exp_data, num_data)
-
-    # quantify the difference between the two curves using
-    # Dynamic Time Warping distance
-    dtw, d = similaritymeasures.dtw(exp_data, num_data)
 
     # print the results
-    #print(pcm, df, area, cl, dtw)
 
+    print(pcm, df, area, cl, dtw)
 
+    from scipy.spatial.distance import directed_hausdorff
 
+    print(directed_hausdorff(exp_data, num_data)[0])
 
     d, cost_matrix, acc_cost_matrix, path = accelerated_dtw(
         exp_data, num_data, dist=manhattan_distance)
