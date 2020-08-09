@@ -73,7 +73,7 @@ def get_outliers(values, warmup_index):
 values_list = []
 
 #sources = [sources[29], sources[34]]
-sources = [sources[42], sources[43]]
+#sources = [sources[42], sources[43]]
 for i, source in enumerate(sources):
     trials = session.get("/sources/{0}/trials".format(source['id'])).json()
     for trial in trials:
@@ -91,7 +91,6 @@ for i, source in enumerate(sources):
         values = values.to_numpy()
         path = Path(
             'benchmarks/')
-        #path.mkdir(parents=True, exist_ok=True)
         filename = "benchmarks/plot_{0}_{1}_{2}.png".format(
             benchmark['name'], executor['name'], i)
         ax = fig.add_subplot()
@@ -169,19 +168,6 @@ for i, values in enumerate(values_list):
 
     exp_data = exp_data.reshape(-1, 1)
     num_data = num_data.reshape(-1, 1)
-
-    """ x = np.arange(len(exp_data))
-    y = exp_data
-    exp_data = np.zeros((len(x), 2))
-    exp_data[:, 0] = x
-    exp_data[:, 1] = y
-
-    x = np.arange(len(num_data))
-    y = num_data
-    num_data = np.zeros((len(x), 2))
-    num_data[:, 0] = x
-    num_data[:, 1] = y """
-
 
     path = Path(
             'compare_plot/')
