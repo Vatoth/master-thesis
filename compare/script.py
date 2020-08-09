@@ -83,21 +83,23 @@ for i, source in enumerate(sources):
         executor = session.get("/executors/{0}".format(run['execid'])).json()
         benchmark = session.get(
             "/benchmarks/{0}".format(run['benchmarkid'])).json()
+        if benchmark['name'] != "SleepingBarber":
+            break
         values = np.array(
             list(map(lambda x: x['value'], measurements)))
         values = pd.Series(values)
         outliers = get_outliers(values, 200)
         values = values.drop(index=outliers)
         values = values.to_numpy()
-        path = Path(
-            'benchmarks/')
-        filename = "benchmarks/plot_{0}_{1}_{2}.png".format(
-            benchmark['name'], executor['name'], i)
-        ax = fig.add_subplot()
-        ax.plot(values, 'b-', label='measurements')
-        fig.savefig(filename, dpi=300)
+        #path = Path(
+        #    'benchmarks/')
+        #filename = "benchmarks/plot_{0}_{1}_{2}.png".format(
+        #    benchmark['name'], executor['name'], i)
+        #ax = fig.add_subplot()
+        #ax.plot(values, 'b-', label='measurements')
+        #fig.savefig(filename, dpi=300)
         values_list.append(values)
-        plt.clf()
+        #plt.clf()
         break
 
 
@@ -151,8 +153,8 @@ for i, values in enumerate(values_list):
         y = values_list[i + 1]
     else:
         break
-    print(len(values_list))
-    print(len(x), len(y))
+    #print(len(values_list))
+    #print(len(x), len(y))
     exp_data = x
     num_data = y
     #exp_data = savgol_filter(x, 51, 3)
@@ -164,7 +166,7 @@ for i, values in enumerate(values_list):
     if len(num_data) < len(exp_data):
         exp_data = exp_data[:len(num_data)]
 
-    pcm, df, area, cl, dtw, d = prepare_data(exp_data, num_data)
+    #pcm, df, area, cl, dtw, d = prepare_data(exp_data, num_data)
 
     exp_data = exp_data.reshape(-1, 1)
     num_data = num_data.reshape(-1, 1)
@@ -172,24 +174,27 @@ for i, values in enumerate(values_list):
     path = Path(
             'compare_plot/')
     path.mkdir(parents=True, exist_ok=True)
-    filename = "compare_plot/plot_{0}.png".format(i)
     ax = fig.add_subplot()
     ax.plot(exp_data, label='1st measurements')
     ax.plot(num_data, label='2nd measurements')
 
-    fig.savefig(filename, dpi=300)
-    plt.clf()
 
 
     # print the results
 
-    print(pcm, df, area, cl, dtw)
+    #print(pcm, df, area, cl, dtw)
 
     from scipy.spatial.distance import directed_hausdorff
 
-    print(directed_hausdorff(exp_data, num_data)[0])
+    value_directed = directed_hausdorff(exp_data, num_data)[0]
 
-    d, cost_matrix, acc_cost_matrix, path = accelerated_dtw(
-        exp_data, num_data, dist=manhattan_distance)
-    print(d / len(exp_data))
+    print(value_directed)
+
+    fig.savefig(filename, dpi=300)
+    filename = "compare_plot/plot_{0}_{1}.png".format(i, value_directed)
+    plt.clf()
+
+    #d, cost_matrix, acc_cost_matrix, path = accelerated_dtw(
+    #    exp_data, num_data, dist=manhattan_distance)
+    #print(d / len(exp_data))
 
