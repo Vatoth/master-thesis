@@ -74,6 +74,8 @@ values_list = []
 
 #sources = [sources[29], sources[34]]
 #sources = [sources[42], sources[43]]
+
+value_dist = []
 for i, source in enumerate(sources):
     trials = session.get("/sources/{0}/trials".format(source['id'])).json()
     for trial in trials:
@@ -98,9 +100,17 @@ for i, source in enumerate(sources):
         #ax = fig.add_subplot()
         #ax.plot(values, 'b-', label='measurements')
         #fig.savefig(filename, dpi=300)
+
+        value_dist.append({'values': values.tolist(), 'name': benchmark['name']})
         values_list.append(values)
         #plt.clf()
         break
+
+
+import json
+with open('data.json', 'w') as f:
+    json.dump(value_dist, f)
+
 
 
 def smooth(y, box_pts):
@@ -190,8 +200,8 @@ for i, values in enumerate(values_list):
 
     print(value_directed)
 
-    fig.savefig(filename, dpi=300)
     filename = "compare_plot/plot_{0}_{1}.png".format(i, value_directed)
+    fig.savefig(filename, dpi=300)
     plt.clf()
 
     #d, cost_matrix, acc_cost_matrix, path = accelerated_dtw(
