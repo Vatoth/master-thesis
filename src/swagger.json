@@ -1,0 +1,1901 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"IExperiment": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"projectid": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"id",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IProject": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"logo": {
+						"type": "string"
+					},
+					"showchanges": {
+						"type": "boolean"
+					},
+					"allresults": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ICriterion": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"unit": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IUnit": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IExecutor": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ITimeline": {
+				"properties": {
+					"numsamples": {
+						"type": "number",
+						"format": "double"
+					},
+					"minval": {
+						"type": "number",
+						"format": "double"
+					},
+					"maxval": {
+						"type": "number",
+						"format": "double"
+					},
+					"sdval": {
+						"type": "number",
+						"format": "double"
+					},
+					"mean": {
+						"type": "number",
+						"format": "double"
+					},
+					"median": {
+						"type": "number",
+						"format": "double"
+					},
+					"bci95low": {
+						"type": "number",
+						"format": "double"
+					},
+					"bci95up": {
+						"type": "number",
+						"format": "double"
+					},
+					"criterion": {
+						"type": "number",
+						"format": "double"
+					},
+					"runid": {
+						"type": "number",
+						"format": "double"
+					},
+					"trialid": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"criterion",
+					"runid",
+					"trialid"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IMeasurement": {
+				"properties": {
+					"invocation": {
+						"type": "number",
+						"format": "double"
+					},
+					"iteration": {
+						"type": "number",
+						"format": "double"
+					},
+					"criterion": {
+						"type": "number",
+						"format": "double"
+					},
+					"trialid": {
+						"type": "number",
+						"format": "double"
+					},
+					"runid": {
+						"type": "number",
+						"format": "double"
+					},
+					"value": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"invocation",
+					"iteration",
+					"criterion",
+					"trialid",
+					"runid",
+					"value"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IRun": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"cmdline": {
+						"type": "string"
+					},
+					"location": {
+						"type": "string"
+					},
+					"varvalue": {
+						"type": "string"
+					},
+					"cores": {
+						"type": "string"
+					},
+					"inputsize": {
+						"type": "string"
+					},
+					"extraargs": {
+						"type": "string"
+					},
+					"maxinvocationtime": {
+						"type": "number",
+						"format": "double"
+					},
+					"miniterationtime": {
+						"type": "number",
+						"format": "double"
+					},
+					"warmup": {
+						"type": "number",
+						"format": "double"
+					},
+					"benchmarkid": {
+						"type": "number",
+						"format": "double"
+					},
+					"suiteid": {
+						"type": "number",
+						"format": "double"
+					},
+					"execid": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IBenchmark": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"logo": {
+						"type": "string"
+					},
+					"showchanges": {
+						"type": "boolean"
+					},
+					"allresults": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IEnvironment": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"hostname": {
+						"type": "string"
+					},
+					"ostype": {
+						"type": "string"
+					},
+					"memory": {
+						"type": "number",
+						"format": "double"
+					},
+					"cpu": {
+						"type": "string"
+					},
+					"clockspeed": {
+						"type": "number",
+						"format": "double"
+					},
+					"note": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ISuite": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ITrial": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"manualrun": {
+						"type": "boolean"
+					},
+					"starttime": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"endtime": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"username": {
+						"type": "string"
+					},
+					"envid": {
+						"type": "number",
+						"format": "double"
+					},
+					"sourceid": {
+						"type": "number",
+						"format": "double"
+					},
+					"expid": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ISchemaVersion": {
+				"properties": {
+					"updatedate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"version": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"version"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ISource": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"repourl": {
+						"type": "string"
+					},
+					"branchortag": {
+						"type": "string"
+					},
+					"commitid": {
+						"type": "string"
+					},
+					"commitmessage": {
+						"type": "string"
+					},
+					"authorname": {
+						"type": "string"
+					},
+					"authoremail": {
+						"type": "string"
+					},
+					"committername": {
+						"type": "string"
+					},
+					"committeremail": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ISoftwareVersionInfo": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "rebench-rest-api",
+		"version": "1.0.0",
+		"contact": {}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/experiments/{id}": {
+			"get": {
+				"operationId": "GetExperiment",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/IExperiment"
+										},
+										{
+											"type": "number",
+											"enum": [
+												null
+											],
+											"nullable": true
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Experiment"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/experiments": {
+			"get": {
+				"operationId": "GetExperiments",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IExperiment"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Experiment"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/projects/{id}": {
+			"get": {
+				"operationId": "GetProject",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/IProject"
+										},
+										{
+											"type": "number",
+											"enum": [
+												null
+											],
+											"nullable": true
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Project"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/projects/{id}/experiments": {
+			"get": {
+				"operationId": "GetProjectExperiment",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/IExperiment"
+										},
+										{
+											"type": "number",
+											"enum": [
+												null
+											],
+											"nullable": true
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Project"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/projects": {
+			"get": {
+				"operationId": "GetProjects",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IProject"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Project"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/criterions/{id}": {
+			"get": {
+				"operationId": "GetCriterion",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ICriterion"
+										},
+										{
+											"type": "number",
+											"enum": [
+												null
+											],
+											"nullable": true
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Criterion"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/criterions": {
+			"get": {
+				"operationId": "GetCriterions",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ICriterion"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Criterion"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/units/{id}": {
+			"get": {
+				"operationId": "GetUnit",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/IUnit"
+										},
+										{
+											"type": "number",
+											"enum": [
+												null
+											],
+											"nullable": true
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Unit"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/units/{id}/criterions": {
+			"get": {
+				"operationId": "GetUnitCriterions",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ICriterion"
+										},
+										{
+											"type": "number",
+											"enum": [
+												null
+											],
+											"nullable": true
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Unit"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/units": {
+			"get": {
+				"operationId": "GetUnits",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IUnit"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Unit"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/executors/{id}": {
+			"get": {
+				"operationId": "GetExecutor",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/IExecutor"
+										},
+										{
+											"type": "number",
+											"enum": [
+												null
+											],
+											"nullable": true
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Executor"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/executors": {
+			"get": {
+				"operationId": "GetExecutors",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IExecutor"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Executor"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/timelines/{id}": {
+			"get": {
+				"operationId": "GetTimeline",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ITimeline"
+										},
+										{
+											"type": "number",
+											"enum": [
+												null
+											],
+											"nullable": true
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Timeline"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/timelines": {
+			"get": {
+				"operationId": "GetTimelines",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ITimeline"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Timeline"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/measurements/{id}": {
+			"get": {
+				"operationId": "GetMeasurement",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/IMeasurement"
+										},
+										{
+											"type": "number",
+											"enum": [
+												null
+											],
+											"nullable": true
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Measurement"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/measurements": {
+			"get": {
+				"operationId": "GetMeasurements",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IMeasurement"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Measurement"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/runs/{id}": {
+			"get": {
+				"operationId": "GetRun",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/IRun"
+										},
+										{
+											"type": "number",
+											"enum": [
+												null
+											],
+											"nullable": true
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Run"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/runs/{id}/timelines": {
+			"get": {
+				"operationId": "GetTrialTimelines",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ITimeline"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Run"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/runs/{id}/measurements": {
+			"get": {
+				"operationId": "GetTrialMeasurements",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IMeasurement"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Run"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/runs": {
+			"get": {
+				"operationId": "GetRuns",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IRun"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Run"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/benchmarks/{id}": {
+			"get": {
+				"operationId": "GetBenchmark",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/IBenchmark"
+										},
+										{
+											"type": "number",
+											"enum": [
+												null
+											],
+											"nullable": true
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Benchmark"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/benchmarks/{id}/executors": {
+			"get": {
+				"operationId": "GetBenchmarkExecutors",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IExecutor"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Benchmark"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/benchmarks/{id}/runs": {
+			"get": {
+				"operationId": "GetBenchmarkRuns",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IRun"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Benchmark"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/benchmarks": {
+			"get": {
+				"operationId": "GetBenchmarks",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IBenchmark"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Benchmark"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/environments/{id}": {
+			"get": {
+				"operationId": "GetEnvironment",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/IEnvironment"
+										},
+										{
+											"type": "number",
+											"enum": [
+												null
+											],
+											"nullable": true
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Environment"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/environments": {
+			"get": {
+				"operationId": "GetEnvironments",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IEnvironment"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Environment"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/suites/{id}": {
+			"get": {
+				"operationId": "GetSuite",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ISuite"
+										},
+										{
+											"type": "number",
+											"enum": [
+												null
+											],
+											"nullable": true
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Suite"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/suites/{id}/runs": {
+			"get": {
+				"operationId": "GetSuiteRuns",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IRun"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Suite"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/suites": {
+			"get": {
+				"operationId": "GetSuites",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ISuite"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Suite"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/trials/{id}": {
+			"get": {
+				"operationId": "GetTrial",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ITrial"
+										},
+										{
+											"type": "number",
+											"enum": [
+												null
+											],
+											"nullable": true
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Trial"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/trials/{id}/measurements": {
+			"get": {
+				"operationId": "GetTrialMeasurements",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ITrial"
+										},
+										{
+											"type": "number",
+											"enum": [
+												null
+											],
+											"nullable": true
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Trial"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/trials/{id}/timelines": {
+			"get": {
+				"operationId": "GetTrialTimelines",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ITimeline"
+										},
+										{
+											"type": "number",
+											"enum": [
+												null
+											],
+											"nullable": true
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Trial"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/trials": {
+			"get": {
+				"operationId": "GetTrials",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ITrial"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Trial"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/schema-versions/{id}": {
+			"get": {
+				"operationId": "GetSchemaVersion",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ISchemaVersion"
+										},
+										{
+											"type": "number",
+											"enum": [
+												null
+											],
+											"nullable": true
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"SchemaVersion"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/schema-versions": {
+			"get": {
+				"operationId": "GetSchemaVersions",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ISchemaVersion"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"SchemaVersion"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/sources/{id}": {
+			"get": {
+				"operationId": "GetSource",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ISource"
+										},
+										{
+											"type": "number",
+											"enum": [
+												null
+											],
+											"nullable": true
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Source"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/sources/{id}/trials": {
+			"get": {
+				"operationId": "GetSourceTrials",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ITrial"
+										},
+										{
+											"type": "number",
+											"enum": [
+												null
+											],
+											"nullable": true
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Source"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/sources": {
+			"get": {
+				"operationId": "GetSources",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ISource"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Source"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "commitid",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "repourl",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/software-version-infos/{id}": {
+			"get": {
+				"operationId": "GetSoftwareVersionInfo",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ISoftwareVersionInfo"
+										},
+										{
+											"type": "number",
+											"enum": [
+												null
+											],
+											"nullable": true
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"SoftwareVersionInfo"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/software-version-infos": {
+			"get": {
+				"operationId": "GetSoftwareVersionInfos",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ISoftwareVersionInfo"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"SoftwareVersionInfo"
+				],
+				"security": [],
+				"parameters": []
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}

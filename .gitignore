@@ -1,7 +1,0 @@
-node_modules
-dist
-src/swagger.json
-src/routes.ts
-*.sql
-*.dump
-benchmarks
