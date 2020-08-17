@@ -16,6 +16,7 @@ def percentage(percent, whole):
 def classify(segs, n_values):
     assert(len(segs) > 0)
     last_seg = segs[-1]
+    STEADY_STATE_LEN = percentage(25, n_values)
     lower_bound = last_seg['mean'] - max(last_seg['variance'], DELTA)
     upper_bound = last_seg['mean'] + max(last_seg['variance'], DELTA)
     label = "flat"

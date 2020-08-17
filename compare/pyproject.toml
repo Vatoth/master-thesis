@@ -14,6 +14,7 @@ similaritymeasures = "^0.4.3"
 scipy = "^1.5.1"
 dtw = "^1.4.0"
 torch = "^1.6.0"
+rdp = "^0.8"
 
 [tool.poetry.dev-dependencies]
 
