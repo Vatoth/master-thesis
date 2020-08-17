@@ -51,6 +51,18 @@ def get_indices_of_outliers(values):
             indices_of_outliers.append(ind)
     return indices_of_outliers
 
+def outliers(tmp):
+    """tmp is a list of numbers"""
+    outs = []
+    mean = sum(tmp)/(1.0*len(tmp))
+    var = sum((tmp[i] - mean)**2 for i in range(0, len(tmp)))/(1.0*len(tmp))
+    std = var**0.5
+    outs = [tmp[i] for i in range(0, len(tmp)) if abs(tmp[i]-mean) > 1.96*std]
+    return outs
+
+
+
+
 
 def get_outliers(values, warmup_index):
     windows = []
@@ -102,7 +114,7 @@ fig = plt.figure(figsize=(40, 10))
 
 def analysis(filename, values):
     values = pd.Series(values)
-    outliers = get_outliers(values, 200)
+    outliers = outliers(values, 200)
     ax = fig.add_subplot()
 
     ax.plot(

@@ -5,11 +5,14 @@ import math
 import json
 from urllib.parse import urljoin
 from pathlib import Path
+from numpy.linalg import norm
+
 
 import requests
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from rdp import rdp
 import similaritymeasures
 
 
@@ -75,7 +78,7 @@ values_list = []
 #sources = [sources[29], sources[34]]
 #sources = [sources[42], sources[43]]
 
-value_dist = []
+""" value_dist = []
 for i, source in enumerate(sources):
     trials = session.get("/sources/{0}/trials".format(source['id'])).json()
     for trial in trials:
@@ -104,13 +107,19 @@ for i, source in enumerate(sources):
         value_dist.append({'values': values.tolist(), 'name': benchmark['name']})
         values_list.append(values)
         #plt.clf()
-        break
+        break """
 
 
-import json
-with open('data.json', 'w') as f:
-    json.dump(value_dist, f)
+#import json
+# with open('data.json', 'w') as f:
+#    json.dump(value_dist, f)
 
+with open('data.json') as f:
+
+    data = json.load(f)
+
+    for values_dict in data:
+        values_list.append(np.array(values_dict['values']))
 
 
 def smooth(y, box_pts):
@@ -121,6 +130,7 @@ def smooth(y, box_pts):
 
 def manhattan_distance(x, y):
     return np.abs(x - y)
+
 
 def prepare_data(exp_data, num_data):
     x = np.arange(len(exp_data))
@@ -135,21 +145,20 @@ def prepare_data(exp_data, num_data):
     num_data[:, 0] = x
     num_data[:, 1] = y
 
-
     # quantify the difference between the two curves using PCM
-    pcm = similaritymeasures.pcm(exp_data, num_data)
+    pcm = 0  # similaritymeasures.pcm(exp_data, num_data)
 
     # quantify the difference between the two curves using
     # Discrete Frechet distance
-    df = similaritymeasures.frechet_dist(exp_data, num_data)
+    df = 0  # similaritymeasures.frechet_dist(exp_data, num_data)
 
     # quantify the difference between the two curves using
     # area between two curves
-    area = similaritymeasures.area_between_two_curves(exp_data, num_data)
+    area = 0  # similaritymeasures.area_between_two_curves(exp_data, num_data)
 
     # quantify the difference between the two curves using
     # Curve Length based similarity measure
-    cl = similaritymeasures.curve_length_measure(exp_data, num_data)
+    cl = 0  # similaritymeasures.curve_length_measure(exp_data, num_data)
 
     # quantify the difference between the two curves using
     # Dynamic Time Warping distance
@@ -157,16 +166,23 @@ def prepare_data(exp_data, num_data):
 
     return pcm, df, area, cl, dtw, d
 
+
 for i, values in enumerate(values_list):
     x = values
     if i + 1 < len(values_list):
         y = values_list[i + 1]
     else:
         break
-    #print(len(values_list))
+    # print(len(values_list))
     #print(len(x), len(y))
     exp_data = x
     num_data = y
+    first_value = (exp_data[0] + num_data[0]) / 2
+    last_value = (exp_data[-1] + num_data[-1]) / 2
+    exp_data[0] = first_value
+    num_data[0] = first_value
+    exp_data[-1] = last_value
+    num_data[-1] = last_value
     #exp_data = savgol_filter(x, 51, 3)
     #num_data = savgol_filter(y, 51, 3)
 
@@ -182,13 +198,11 @@ for i, values in enumerate(values_list):
     num_data = num_data.reshape(-1, 1)
 
     path = Path(
-            'compare_plot/')
+        'compare_plot/')
     path.mkdir(parents=True, exist_ok=True)
     ax = fig.add_subplot()
     ax.plot(exp_data, label='1st measurements')
     ax.plot(num_data, label='2nd measurements')
-
-
 
     # print the results
 
@@ -200,11 +214,11 @@ for i, values in enumerate(values_list):
 
     print(value_directed)
 
-    filename = "compare_plot/plot_{0}_{1}.png".format(i, value_directed)
+    d, cost_matrix, acc_cost_matrix, path = accelerated_dtw(
+        exp_data, num_data, dist=lambda x, y: norm(x - y, ord=1))
+    print(d)
+
+    filename = "compare_plot/plot_{0}_{1}_{2}.png".format(i, value_directed, d)
     fig.savefig(filename, dpi=300)
     plt.clf()
-
-    #d, cost_matrix, acc_cost_matrix, path = accelerated_dtw(
-    #    exp_data, num_data, dist=manhattan_distance)
-    #print(d / len(exp_data))
 
