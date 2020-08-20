@@ -36,7 +36,7 @@ export class SourceController extends Controller {
     @Query() commitid: string = undefined,
     @Query() repourl: string = undefined
   ): Promise<ISource[]> {
-    if (!commitid || !repourl) {
+    if (!commitid && !repourl) {
       return await Source.findAll();
     }
     if (commitid) {

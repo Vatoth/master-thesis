@@ -221,4 +221,3 @@ for i, values in enumerate(values_list):
     filename = "compare_plot/plot_{0}_{1}_{2}.png".format(i, value_directed, d)
     fig.savefig(filename, dpi=300)
     plt.clf()
-
