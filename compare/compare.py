@@ -119,6 +119,10 @@ def compare(
     ax = fig.add_subplot()
     ax.plot(first_measurements_data, label='1st measurements')
     ax.plot(last_measurements_data, label='2nd measurements')
+    ax.set_title('Comparaison between two commit of {} algorithm'.format(benchmark_name))
+    ax.set_xlabel('Iterations')
+    ax.set_ylabel('Time (ms)')
+    ax.legend()
     filename = "plot_from_compare/plot_{0}_{1}.png".format(
         benchmark_name, value_directed)
 
